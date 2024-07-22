@@ -1,0 +1,14 @@
+Forestal del Fresno/
+│
+├── static/                # Folder for static files (CSS, JavaScript, images)
+│   ├── styles.css         # CSS file
+│   └── script.js          # JavaScript file (if needed)
+│
+├── templates/             # Folder for HTML templates
+│   ├── base.html          # Base template that other templates extend
+│   ├── index.html         # Home page
+│   ├── products.html      # Products listing page
+│   ├── product_detail.html# Individual product page
+│   └── contact.html       # Contact form page
+│
+└── woodproducts.db        # SQLite database file (created by Flask-SQLAlchemy)

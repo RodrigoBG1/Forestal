@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <p>(+52) 618 130 1655</p>
+    <title>Forestal del Fresno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Forestal del Fresno</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#about">Acerca de nosotros</a></li>
+                <li><a href="{{ url_for('products') }}">Productos</a></li>
+                <li><a href="{{ url_for('contact') }}">Contactanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2>Bienvenido a Forestal del Fresno</h2>
+            <p>Vendiendo madera de calidad desde 15 de enero de 1987.</p>
+            <p>Hacemos venta de mayoreo, medio mayoreo y menudeo</p>
+            <p>Ofrecemos servicio de canteado, cepillado y rajado de tablas. Envio a domicilio  gratis a partit de 1000 pesos </p>
+        </section>
+
+        <section id="about">
+            <h2>Acerca de nosotros</h2>
+            <p>Nosotros somos una empresa 100% duranguense. Empresa maderera de tradición y calidad </p>
+            <p>Encuentranos en Av. La Salle 304-A, El Saltito, 34105 Durango, Dgo.</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3644.6349579
+            30094!2d-104.702579024716!3d24.00866437881255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.
+            1!3m3!1m2!1s0x869bc875b958d389%3A0xb2885ce81693f1cb!2sForestal%20del%20Fresno%2C%20S
+            .A.%20de%20C.V.!5e0!3m2!1ses!2smx!4v1721264586434!5m2!1ses!2smx" width="600" height=
+            "450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <p>Llamanos al (+52) 618 130 1655 </p>
+            <p>Celular (Whatsapp): (+52) 618 329 2828/ </p>
+            <p>Correo: forestadelfresno@prodigy.net.mx</p>
+        </section>
+
+    <footer>
+        <p>Numero: (+52) 618 130 1655 </p>
+        <p>Celular (Whatsapp): (+52) 618 329 2828/ </p>
+        <p>Correo: forestadelfresno@prodigy.net.mx</p>
+        <p>&copy; 2024 Forestal del Fresno. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

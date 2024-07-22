@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forestal del Fresno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Forestal del Fresno</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="#about">Acerca de nosotros</a></li>
+                <li><a href="{{ url_for('products') }}">Productos</a></li>
+                <li><a href="{{ url_for('contact') }}">Contactanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="product-detail">
+        <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Precio: ${{ product.price }}</p>
+        <p>Detalles: {{ product.details }}</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Forestal del Fresno. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
