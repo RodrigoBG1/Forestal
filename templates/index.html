@@ -9,9 +9,11 @@
 </head>
 <body>
     <header>
-        <h1>Forestal del Fresno</h1>
+        <img src="{{ url_for('static', filename='images/' ~ logo) }}" alt="{{ logo }}" width="500">
         <nav>
+            
             <ul>
+                
                 <li><a href="#home">Inicio</a></li>
                 <li><a href="#about">Acerca de nosotros</a></li>
                 <li><a href="{{ url_for('products') }}">Productos</a></li>
@@ -22,15 +24,34 @@
 
     <main>
         <section id="home">
+
             <h2>Bienvenido a Forestal del Fresno</h2>
-            <p>Vendiendo madera de calidad desde 15 de enero de 1987.</p>
-            <p>Hacemos venta de mayoreo, medio mayoreo y menudeo</p>
-            <p>Ofrecemos servicio de canteado, cepillado y rajado de tablas. Envio a domicilio  gratis a partit de 1000 pesos </p>
+            <h3>Vendiendo madera de calidad desde 1987</h3>
+            
         </section>
 
+        <section2 id="Ofrecemos">
+            <div class="image-row">
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/' ~ venta) }}" alt="{{ venta }}">
+                    <h4>Venta de mayoreo, medio mayoreo y menudeo</h4>
+                </div>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/' ~ canteado) }}" alt="{{ canteado }}">
+                    <h4>Servicio de canteado, cepillado y rajado de tablas</h4>
+                </div>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/' ~ tres) }}" alt="{{ tres }}">
+                    <h4>Productos de excelencia</h4>
+                </div>
+            </div>
+            <p>*Envío a domicilio gratis a partir de $1000.00 M.N. .</p>
+        </section2>
+
+        <div class="footer::after"></div>
         <section id="about">
             <h2>Acerca de nosotros</h2>
-            <p>Nosotros somos una empresa 100% duranguense. Empresa maderera de tradición y calidad </p>
+            <p>Somos una empresa 100% duranguense. Empresa maderera de tradición y calidad. </p>
             <p>Encuentranos en Av. La Salle 304-A, El Saltito, 34105 Durango, Dgo.</p>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3644.6349579
             30094!2d-104.702579024716!3d24.00866437881255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.
@@ -41,6 +62,7 @@
             <p>Celular (Whatsapp): (+52) 618 329 2828/ </p>
             <p>Correo: forestadelfresno@prodigy.net.mx</p>
         </section>
+        
 
     <footer>
         <p>Numero: (+52) 618 130 1655 </p>

@@ -19,7 +19,12 @@ class Product(db.Model):
 # Route for home page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    logo = 'logo.png'
+    venta= 'venta.jpg'
+    canteado='canteado.jpg'
+    tres='tres.jpeg'
+    
+    return render_template('index.html', logo=logo, venta=venta, canteado=canteado, tres=tres)
 
 # Route for products page
 @app.route('/products')
