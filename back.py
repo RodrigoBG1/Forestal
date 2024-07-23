@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -30,19 +31,19 @@ def index():
 @app.route('/products')
 def products():
     main_products = Product.query.filter_by(category="main").all()
-    return render_template('products.html', products=main_products)
+    return render_template('products.html', products=main_products, logo='logo.png')
 
 # Route for category products
 @app.route('/category/<string:category>')
 def category_products(category):
     products = Product.query.filter_by(category=category).all()
-    return render_template('category_products.html', category=category, products=products)
+    return render_template('category_products.html', category=category, products=products, logo='logo.png')
 
 # Route for individual product pages
 @app.route('/product/<int:product_id>')
 def product_detail(product_id):
     product = Product.query.get_or_404(product_id)
-    return render_template('product_detail.html', product=product)
+    return render_template('product_detail.html', product=product, logo='logo.png')
 
 # API route for product data
 @app.route('/api/products')
@@ -56,28 +57,43 @@ def api_products():
         'category': product.category
     } for product in products])
 
-# Route for contact form
+# Configure Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp-mail.outlook.com'  # Outlook SMTP server
+app.config['MAIL_PORT'] = 587  # Outlook SMTP port
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'forestalweb@outlook.com'
+app.config['MAIL_PASSWORD'] = 'web12345'
+app.config['MAIL_DEFAULT_SENDER'] = 'forestalweb@outlook.com'
+
+mail = Mail(app)
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
         message = request.form['message']
-        # Process form data (e.g., save to database or send email)
+        
+        # Send email
+        msg = Message("New Contact Form Submission", 
+                      recipients=["Forestalweb@outlook.com"])  # Replace with your actual email
+        msg.body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
+        mail.send(msg)
+        
         return "Thank you for your message. We'll get back to you soon!"
-    return render_template('contact.html')
+    
+    return render_template('contact.html', logo='logo.png')
 
 def add_sample_products():
     products = [
         # Main categories
         Product(name="Tablas", description="Madera de pino de alta calidad", image="tabla.jpg", category="main"),
-        Product(name="Tablones y barrotes", description="Madera resistente", image="barrote.jpg", category="main"),
-        Product(name="Polines", description="Madera de cedro aromática", image="polin.jpg", category="main"),
+        Product(name="Tablones y barrotes", description="Madera  de pino con espesor de 5/4 y 6/4", image="barrote.jpg", category="main"),
+        Product(name="Polines", description="Madera de pino de 3x3 ", image="polin.jpg", category="main"),
         Product(name="Triplay", description="Madera de cedro aromática", image="triplay.jpg", category="main"),
         
-        # Specific products for each category
         # Tablas
-        Product(name="Tabla de 8 de largo", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
+        Product(name="Tabla de 8 de largo", description="Tabla de pino en todas clase de 4 a 12 pulgadas de ancho", image="tabla.jpg", category="Tablas"),
         Product(name="Tabla de 10 de largo", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
         Product(name="Tabla de 12 de largo", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
         Product(name="Tabla de 14 de largo ", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
@@ -85,17 +101,32 @@ def add_sample_products():
         Product(name="Tabla de 18 de largo", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
         Product(name="Tabla de 20 de largo", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
         
-
-        
         # Barrotes y Tablones
-        Product(name="Barrote de Cedro", description="Barrote de cedro de 4x4 pulgadas", image="barrote_cedro.jpg", category="Barrotes"),
-        Product(name="Barrote de Pino", description="Barrote de pino tratado de 6x6 pulgadas", image="barrote_pino.jpg", category="Barrotes"),
+        Product(name="Tablón de 8 de largo", description="Tablón de pino en todas clase de 4 a 12 pulgadas de ancho", image="barrote.jpg", category="Barrotes"),
+        Product(name="Tablón de 10 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
+        Product(name="Tablón de 12 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
+        Product(name="Tablón de 14 de largo ", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
+        Product(name="Tablón de 16 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
+        Product(name="Tablón de 18 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
+        Product(name="Tablón de 20 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"), 
+               
         # Polines
-        Product(name="Polín de Madera", description="Polín de madera tratada de 8 pies", image="polin_madera.jpg", category="Polines"),
-        Product(name="Polín de Plástico", description="Polín de plástico reciclado de 6 pies",  image="polin_plastico.jpg", category="Polines"),
+        Product(name="Polin de 8 de largo", description="Polin de pino en todas clase de 4 a 12 pulgadas de ancho", image="polin.jpg", category="Polines"),
+        Product(name="Polin de 10 de largo", description="Polin de pino en todas clase de 4 a 12 de ancho", image="polin.jpg", category="Polines"),
+        Product(name="Polin de 12 de largo", description="Polin de pino en todas clase de 4 a 12 de ancho", image="polin.jpg", category="Polines"),
+        Product(name="Polin de 14 de largo ", description="Polin de pino en todas clase de 4 a 12 de ancho", image="polin.jpg", category="Polines"),
+        Product(name="Polin de 16 de largo", description="Polin de pino en todas clase de 4 a 12 de ancho", image="polin.jpg", category="Polines"),
+        Product(name="Polin de 18 de largo", description="Polin de pino en todas clase de 4 a 12 de ancho", image="polin.jpg", category="Polines"),
+        Product(name="Polin de 20 de largo", description="Polin de pino en todas clase de 4 a 12 de ancho", image="polin.jpg", category="Polines"), 
+
         #Triplay
-        Product(name="Triplay de Pino", description="Triplay de pino de 18mm",  image="triplay_pino.jpg", category="Triplay"),
-        Product(name="Triplay de Okume", description="Triplay de okume de 12mm",  image="triplay_okume.jpg", category="Triplay")
+        Product(name="Triplay de 5.5 mm", description="Hoja de Triplay de 5.5 mm cd ",  image="triplay.jpg", category="Triplay"),
+        Product(name="Triplay de 12 mm", description="Hoja de Triplay de 12 mm para cimbra ",  image="triplay.jpg", category="Triplay"),
+        Product(name="Triplay de 16 mm", description="Hoja de Triplay de 16 mm para cimbra ",  image="triplay.jpg", category="Triplay"),
+        Product(name="Triplay de 19 mm", description="Hoja de Triplay de 19 mm para cimbra ",  image="triplay.jpg", category="Triplay"),
+        Product(name="Triplay de 12 mm", description="Hoja de Triplay de 12 mm de segunda",  image="triplay.jpg", category="Triplay"),
+        Product(name="Triplay de 16 mm", description="Hoja de Triplay de 16 mm de segunda ",  image="triplay.jpg", category="Triplay"),
+        Product(name="Triplay de 19 mm", description="Hoja de Triplay de 19 mm de segunda ",  image="triplay.jpg", category="Triplay"),
     ]
     
     for product in products:
