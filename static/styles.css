@@ -460,3 +460,61 @@ button {
 .image-container p {
   margin-top: 10px; /* Espacio entre la imagen y el texto */
 }
+
+/* Search bar styles */
+.search-form {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 200px;
+  padding: 0.5rem;
+  border: 2px solid #173f20;
+  border-radius: 4px 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.search-button {
+  background-color: #173f20;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #5d4037;
+}
+
+/* Adjust header to accommodate the search bar */
+header {
+  position: relative;
+  padding-top: 60px; /* Increase top padding to make room for the search bar */
+}
+
+@media (max-width: 768px) {
+  .search-form {
+    position: static;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 60%;
+  }
+
+  .search-button {
+    width: 40%;
+  }
+
+  header {
+    padding-top: 20px; /* Reset padding for mobile */
+  }
+}

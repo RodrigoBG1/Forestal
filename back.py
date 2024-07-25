@@ -56,6 +56,13 @@ def api_products():
         'price': product.price,
         'category': product.category
     } for product in products])
+    
+@app.route('/search')
+def search():
+    query = request.args.get('query', '')
+    products = Product.query.filter(Product.name.ilike(f'%{query}%') | 
+                                    Product.description.ilike(f'%{query}%')).all()
+    return render_template('search_results.html', products=products, query=query, logo='logo.png')
 
 # Configure Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp-mail.outlook.com'  # Outlook SMTP server
@@ -76,11 +83,11 @@ def contact():
         
         # Send email
         msg = Message("New Contact Form Submission", 
-                      recipients=["Forestalweb@outlook.com"])  # Replace with your actual email
+                      recipients=["Forestalweb@outlook.com"])
         msg.body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
         mail.send(msg)
         
-        return "Thank you for your message. We'll get back to you soon!"
+        return "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto!"
     
     return render_template('contact.html', logo='logo.png')
 
@@ -102,13 +109,13 @@ def add_sample_products():
         Product(name="Tabla de 20 de largo", description="Tabla de pino en todas clase de 4 a 12 de ancho", image="tabla.jpg", category="Tablas"),
         
         # Barrotes y Tablones
-        Product(name="Tablón de 8 de largo", description="Tablón de pino en todas clase de 4 a 12 pulgadas de ancho", image="barrote.jpg", category="Barrotes"),
-        Product(name="Tablón de 10 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
-        Product(name="Tablón de 12 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
-        Product(name="Tablón de 14 de largo ", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
-        Product(name="Tablón de 16 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
-        Product(name="Tablón de 18 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"),
-        Product(name="Tablón de 20 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Barrotes"), 
+        Product(name="Tablón de 8 de largo", description="Tablón de pino en todas clase de 4 a 12 pulgadas de ancho", image="barrote.jpg", category="Tablones y barrotes"),
+        Product(name="Tablón de 10 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Tablones y barrotes"),
+        Product(name="Tablón de 12 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Tablones y barrotes"),
+        Product(name="Tablón de 14 de largo ", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Tablones y barrotes"),
+        Product(name="Tablón de 16 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Tablones y barrotes"),
+        Product(name="Tablón de 18 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Tablones y barrotes"),
+        Product(name="Tablón de 20 de largo", description="Tablón de pino en todas clase de 4 a 12 de ancho", image="barrote.jpg", category="Tablones y barrotes"), 
                
         # Polines
         Product(name="Polin de 8 de largo", description="Polin de pino en todas clase de 4 a 12 pulgadas de ancho", image="polin.jpg", category="Polines"),
@@ -143,23 +150,3 @@ if __name__ == '__main__':
     app.run(debug=True)        
     
     
-    """Product(name="Tabla de 4 x 8", description="Tabla de pino en todas clase de 4 x 8 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 6 x 8", description="Tabla de pino en todas clase de 6 x 8 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 8 x 8", description="Tabla de pino en todas clase de 8 x 8 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 10 x 8", description="Tabla de pino en todas clase de 10 x 8 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 12 x 8", description="Tabla de pino en todas clase de 12 x 10 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 4 x 10", description="Tabla de pino en todas clase de 4 x 10 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 6 x 10", description="Tabla de pino en todas clase de 6 x 10 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 8 x 10", description="Tabla de pino en todas clase de 8 x 10 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 10 x 10", description="Tabla de pino en todas clase de 10 x 10 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 12 x 10", description="Tabla de pino en todas clase de 12 x 10 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 4 x 12", description="Tabla de pino en todas clase de 4 x 12 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 6 x 12", description="Tabla de pino en todas clase de 6 x 12 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 8 x 12", description="Tabla de pino en todas clase de 8 x 12 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 10 x 12", description="Tabla de pino en todas clase de 10 x 12 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 12 x 12", description="Tabla de pino en todas clase de 12 x 12 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 4 x 14", description="Tabla de pino en todas clase de 4 x 14 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 6 x 14", description="Tabla de pino en todas clase de 6 x 14 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 8 x 14", description="Tabla de pino en todas clase de 8 x 14 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 10 x 14", description="Tabla de pino en todas clase de 10 x 14 pulgadas", image="tabla.jpg", category="Tablas"),
-        Product(name="Tabla de 12 x 14", description="Tabla de pino en todas clase de 12 x 14 pulgadas", image="tabla.jpg", category="Tablas"),"""

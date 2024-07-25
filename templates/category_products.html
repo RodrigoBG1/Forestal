@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <p>(+52) 618 130 1655</p>
     <title>Forestal del Fresno</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
+        <form class="search-form" action="{{ url_for('search') }}" method="GET">
+            <input class="search-input" type="text" name="query" placeholder="Buscar productos...">
+            <button class="search-button" type="submit">Buscar</button>
+        </form>
         <img src="{{ url_for('static', filename='images/' ~ logo) }}" alt="{{ logo }}" width="400">
         <nav>
             <ul>
                 <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li><a href="#{{ url_for('index') }}">Acerca de nosotros</a></li>
+                <li><a href="{{ url_for('index') }}">Acerca de nosotros</a></li>
                 <li><a href="{{ url_for('products') }}">Productos</a></li>
                 <li><a href="{{ url_for('contact') }}">Contactanos</a></li>
             </ul>

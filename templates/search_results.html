@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de búsqueda - Forestal del Fresno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/' ~ logo) }}" alt="Forestal del Fresno Logo" width="400">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('index') }}">Acerca de nosotros</a></li>
+                <li><a href="{{ url_for('products') }}">Productos</a></li>
+                <li><a href="{{ url_for('contact') }}">Contáctanos</a></li>
+            </ul>
+        </nav>
+        <form class="search-form" action="{{ url_for('search') }}" method="GET">
+            <input class="search-input" type="text" name="query" placeholder="Buscar productos..." value="{{ query }}">
+            <button class="search-button" type="submit">Buscar</button>
+        </form>
+    </header>
+
+    <main role="main">
+        <h2>Resultados de búsqueda para "{{ query }}"</h2>
+
+        {% if products %}
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.description }}</p>
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}">Ver detalles</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>Numero: (+52) 618 130 1655</p>
+        <p>Celular (Whatsapp): (+52) 618 329 2828</p>
+        <p>Correo: forestadelfresno@prodigy.net.mx</p>
+        <p>© 2024 Forestal del Fresno. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

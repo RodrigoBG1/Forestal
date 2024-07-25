@@ -3,38 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <p>(+52) 618 130 1655</p>
     <title>Forestal del Fresno</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/' ~ logo) }}" alt="{{ logo }}" width="400">
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li><a href="#{{ url_for('index') }}">Acerca de nosotros</a></li>
-                <li><a href="{{ url_for('products') }}">Productos</a></li>
-                <li><a href="{{ url_for('contact') }}">Contactanos</a></li>
-            </ul>
-        </nav>
+        <div>
+            <img src="{{ url_for('static', filename='images/' ~ logo) }}" alt="Logo" width="400">
+
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('index') }}">Acerca de nosotros</a></li>
+                    <li><a href="{{ url_for('products') }}">Productos</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contáctanos</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
+    <main role="main">
         <h2>Contáctanos</h2>
-        <form action="{{ url_for('contact') }}" method="POST">
+        
+        <form id="contactForm" method="POST">
             <input type="text" name="name" placeholder="Nombre" required>
             <input type="email" name="email" placeholder="Email" required>
             <textarea name="message" placeholder="Mensaje" required></textarea>
+            
             <button type="submit">Enviar</button>
         </form>
+        
+        <div id="messageDisplay"></div>
     </main>
 
     <footer>
-        <p>Numero: (+52) 618 130 1655 </p>
-        <p>Celular (Whatsapp): (+52) 618 329 2828/ </p>
+        <p>Numero: (+52) 618 130 1655</p>
+        <p>Celular (Whatsapp): (+52) 618 329 2828</p>
         <p>Correo: forestadelfresno@prodigy.net.mx</p>
-        <p>&copy; 2024 Forestal del Fresno. Todos los derechos reservados.</p>
+        <p>© 2024 Forestal del Fresno. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                url: '{{ url_for("contact") }}',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#messageDisplay').text(response);
+                    $('#contactForm')[0].reset();
+                },
+                error: function() {
+                    $('#messageDisplay').text('Ocurrió un error. Por favor, inténtalo de nuevo.');
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
