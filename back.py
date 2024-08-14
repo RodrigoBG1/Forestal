@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
+import logging
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -74,6 +75,9 @@ app.config['MAIL_DEFAULT_SENDER'] = 'forestalweb@outlook.com'
 
 mail = Mail(app)
 
+# Set up logging
+#logging.basicConfig(filename='contact_submissions.log', level=logging.INFO)
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
@@ -81,11 +85,9 @@ def contact():
         email = request.form['email']
         message = request.form['message']
         
-        # Send email
-        msg = Message("New Contact Form Submission", 
-                      recipients=["Forestalweb@outlook.com"])
-        msg.body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
-        mail.send(msg)
+        # Log the submission instead of sending an email
+        log_message = f"New Contact Form Submission\nName: {name}\nEmail: {email}\nMessage: {message}"
+        logging.info(log_message)
         
         return "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto!"
     
